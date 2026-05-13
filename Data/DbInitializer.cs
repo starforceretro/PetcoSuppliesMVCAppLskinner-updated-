@@ -5,13 +5,17 @@ namespace PetcoSuppliesMVCAppLskinner.Data
     public static class DbInitializer
     {
 
-     private static async Task CreateUserAsync(
-    UserManager<ApplicationUser> userManager,
-    string email,
-    string password,
-    string role,
-    string firstName,
-    string lastName)
+        private static async Task CreateUserAsync(
+       UserManager<ApplicationUser> userManager,
+       string email,
+       string password,
+       string role,
+       string firstName,
+       string lastName,
+        string street,
+       string town,
+       string postCode,
+       string telephoneNumber)
         {
             var existingUser = await userManager.FindByEmailAsync(email);
 
@@ -24,9 +28,10 @@ namespace PetcoSuppliesMVCAppLskinner.Data
                     EmailConfirmed = true,
                     FirstName = firstName,
                     LastName = lastName,
-                    Street = "123 Test Street",
-                    Town = "London",
-                    PostCode = "AB12CD"
+                    Street = street,
+                    Town = town,
+                    PostCode = postCode,
+                    TelephoneNumber = telephoneNumber // <-- Add this line
                 };
 
                 var result = await userManager.CreateAsync(user, password);
@@ -36,29 +41,6 @@ namespace PetcoSuppliesMVCAppLskinner.Data
                     await userManager.AddToRoleAsync(user, role);
                 }
 
-                await CreateUserAsync(
-    userManager,
-    "staff1@petco.com",
-    "Staff123!",
-    "Staff",
-    "Jane",
-    "Smith");
-
-                await CreateUserAsync(
-                    userManager,
-                    "customer1@petco.com",
-                    "Customer123!",
-                    "Customer",
-                    "Bob",
-                    "Jones");
-
-                await CreateUserAsync(
-                    userManager,
-                    "customer2@petco.com",
-                    "Customer123!",
-                    "Customer",
-                    "Alice",
-                    "Brown");
             }
         }
 
@@ -130,11 +112,141 @@ namespace PetcoSuppliesMVCAppLskinner.Data
                     await userManager.AddToRoleAsync(adminUser, "Admin");
                 }
             }
+
+
+            // ADMINS
+
+            await CreateUserAsync(
+                userManager,
+                "admin@petco.com",
+                "Admin123!",
+                "Admin",
+                "James",
+                "Anderson",
+                "12 King Street",
+                "London",
+                "SW1A1AA",
+                "07111111111");
+
+            await CreateUserAsync(
+                userManager,
+                "admin2@petco.com",
+                "Admin123!",
+                "Admin",
+                "Sarah",
+                "Wilson",
+                "44 Rose Avenue",
+                "Manchester",
+                "M11AB",
+                "07222222222");
+
+
+            // STAFF
+
+            await CreateUserAsync(
+                userManager,
+                "staff1@petco.com",
+                "Staff123!",
+                "Staff",
+                "Emily",
+                "Brown",
+                "18 River Road",
+                "Liverpool",
+                "L12CD",
+                "07333333333");
+
+            await CreateUserAsync(
+                userManager,
+                "staff2@petco.com",
+                "Staff123!",
+                "Staff",
+                "Daniel",
+                "Taylor",
+                "77 Green Lane",
+                "Leeds",
+                "LS11EF",
+                "07444444444");
+
+            await CreateUserAsync(
+                userManager,
+                "staff3@petco.com",
+                "Staff123!",
+                "Staff",
+                "Olivia",
+                "Martin",
+                "5 Oak Close",
+                "Birmingham",
+                "B12GH",
+                "07555555555");
+
+
+            // CUSTOMERS
+
+            await CreateUserAsync(
+                userManager,
+                "customer1@petco.com",
+                "Customer123!",
+                "Customer",
+                "Alice",
+                "Johnson",
+                "91 High Street",
+                "Glasgow",
+                "G12JK",
+                "07666666666");
+
+            await CreateUserAsync(
+                userManager,
+                "customer2@petco.com",
+                "Customer123!",
+                "Customer",
+                "Michael",
+                "Smith",
+                "23 Park Avenue",
+                "Edinburgh",
+                "EH34LM",
+                "07777777777");
+
+            await CreateUserAsync(
+                userManager,
+                "customer3@petco.com",
+                "Customer123!",
+                "Customer",
+                "Chloe",
+                "Davis",
+                "8 Meadow Way",
+                "Bristol",
+                "BS56NO",
+                "07888888888");
+
+            await CreateUserAsync(
+                userManager,
+                "customer4@petco.com",
+                "Customer123!",
+                "Customer",
+                "Ryan",
+                "Walker",
+                "14 Willow Drive",
+                "Cardiff",
+                "CF78PQ",
+                "07999999999");
+
+            await CreateUserAsync(
+                userManager,
+                "customer5@petco.com",
+                "Customer123!",
+                "Customer",
+                "Sophia",
+                "Evans",
+                "66 Cedar Street",
+                "Newcastle",
+                "NE90RS",
+                "07000000000");
+
+
+
+
+
         }
-
-
-
-
     }
 }
 
