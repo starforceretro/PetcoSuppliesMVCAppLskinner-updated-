@@ -23,8 +23,8 @@
             [Required]
             public string PostCode { get; set; }
 
-          
+        public ICollection<Order> Orders { get; set; }
 
-        }
+    }
     }
 

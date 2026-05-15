@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetcoSuppliesMVCAppLskinner.Models
 {
@@ -16,10 +17,13 @@ namespace PetcoSuppliesMVCAppLskinner.Models
 
         public int Stock { get; set; }
 
-        public string ImageUrl { get; set; } // URL to the product image
+        public string? ImageUrl { get; set; } // URL to the product image
 
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; } // Navigation property to the related category
+        public Category? Category { get; set; } // Navigation property to the related category
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

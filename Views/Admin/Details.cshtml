@@ -1,0 +1,24 @@
+﻿<h2>User Details</h2>
+
+<p>Name: @Model.FirstName @Model.LastName</p>
+<p>Email: @Model.Email</p>
+<p>Town: @Model.Town</p>
+
+<h3>Orders</h3>
+
+<table class="table">
+    <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Total</th>
+    </tr>
+
+    @foreach (var order in Model.Orders)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.OrderDate</td>
+            <td>@order.TotalAmount</td>
+        </tr>
+    }
+</table>
