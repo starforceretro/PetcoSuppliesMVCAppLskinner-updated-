@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.WishListItem>
+
+@{
+    ViewData["Title"] = "My Wishlist";
+}
+
+<h1 class="mb-4">My Wishlist</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Your wishlist is currently empty.
+    </div>
+}
+else
+{
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100 shadow-sm">
+
+                    <img src="@item.Product.ImageUrl"
+                         class="card-img-top"
+                         style="height:250px; object-fit:cover;" />
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            @item.Product.Name
+                        </h5>
+
+                        <p class="card-text">
+                            @item.Product.Description
+                        </p>
+
+                        <p>
+                            <strong>£@item.Product.Price</strong>
+                        </p>
+
+                        <a asp-controller="Products"
+                           asp-action="Details"
+                           asp-route-id="@item.ProductId"
+                           class="btn btn-primary">
+                            View Product
+                        </a>
+
+                        <a asp-action="Remove"
+                           asp-route-id="@item.Id"
+                           class="btn btn-danger">
+                            Remove
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}

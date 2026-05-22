@@ -28,5 +28,9 @@ namespace PetcoSuppliesMVCAppLskinner.Data
         public DbSet<PetGalleryPost> PetGalleryPosts { get; set; }
 
         public DbSet<AdviceArticle> AdviceArticles { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }

@@ -51,4 +51,12 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    <a asp-controller="Wishlist"
+       asp-action="Add"
+       asp-route-productId="@Model.Id"
+       class="btn btn-outline-danger">
+
+        Add To Wishlist
+    </a>
+
 </div>

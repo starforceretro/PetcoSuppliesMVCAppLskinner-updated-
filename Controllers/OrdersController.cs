@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetcoSuppliesMVCAppLskinner.Data;
@@ -15,24 +17,115 @@ namespace PetcoSuppliesMVCAppLskinner.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public OrdersController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Checkout()
+        {
+            var user =
+                await _userManager.GetUserAsync(User);
+
+            // GET USER CART
+
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(ci => ci.Product)
+                .FirstOrDefaultAsync(c => c.UserId == user.Id);
+
+            if (cart == null || !cart.CartItems.Any())
+            {
+                TempData["Error"] = "Your cart is empty.";
+
+                return RedirectToAction(
+                    "Index",
+                    "Cart");
+            }
+
+            // CHECK STOCK AGAIN BEFORE ORDERING
+
+            foreach (var item in cart.CartItems)
+            {
+                if (item.Quantity > item.Product.Stock)
+                {
+                    TempData["Error"] =
+                        $"{item.Product.Name} does not have enough stock.";
+
+                    return RedirectToAction(
+                        "Index",
+                        "Cart");
+                }
+            }
+
+            // CREATE ORDER
+
+            var order = new Order
+            {
+                UserId = user.Id,
+                OrderDate = DateTime.Now,
+                Status = "Pending",
+                TotalAmount = 0,
+                OrderItems = new List<OrderItem>()
+            };
+
+            decimal total = 0;
+
+            // CONVERT CART ITEMS INTO ORDER ITEMS
+
+            foreach (var item in cart.CartItems)
+            {
+                var orderItem = new OrderItem
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Price = item.Product.Price
+                };
+
+                order.OrderItems.Add(orderItem);
+
+                // REDUCE STOCK
+
+                item.Product.Stock -= item.Quantity;
+
+                total += item.Product.Price * item.Quantity;
+            }
+
+            order.TotalAmount = total;
+
+            _context.Orders.Add(order);
+
+            // CLEAR CART
+
+            _context.CartItems.RemoveRange(cart.CartItems);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(
+                nameof(OrderConfirmation),
+                new { id = order.Id });
         }
 
         // shows user orders 
+        [Authorize]
         public async Task<IActionResult> UserOrders()
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
-            if (userId == null)
-            {
-                return NotFound();
-            }
+            var user =
+                await _userManager.GetUserAsync(User);
+
             var orders = await _context.Orders
-                .Where(o => o.UserId == userId)
+                .Where(o => o.UserId == user.Id)
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
+                .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
+
             return View(orders);
         }
 

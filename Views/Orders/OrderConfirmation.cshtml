@@ -1,11 +1,48 @@
-﻿<h1>Order Confirmed!</h1>
+﻿@model PetcoSuppliesMVCAppLskinner.Models.Order
+
+<h1>Order Confirmation</h1>
 
 <p>
-    Thank you for your purchase.
+    Thank you for your order!
 </p>
 
-<a asp-controller="Products"
-   asp-action="Index" 
-   class="btn btn-primary">
-    Continue Shopping
-</a> 
+<p>
+    Order Number: @Model.Id
+</p>
+
+<p>
+    Date: @Model.OrderDate
+</p>
+
+<p>
+    Status: @Model.Status
+</p>
+
+<p>
+    Total: £@Model.TotalAmount
+</p>
+
+<h3>Items</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>£@item.Price</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

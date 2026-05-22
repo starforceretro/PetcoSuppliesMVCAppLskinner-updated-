@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.Order>
+
+<h1>My Orders</h1>
+
+@foreach (var order in Model)
+{
+    <div class="card mb-4 p-3">
+
+        <h4>
+            Order #@order.Id
+        </h4>
+
+        <p>
+            Date: @order.OrderDate
+        </p>
+
+        <p>
+            Status: @order.Status
+        </p>
+
+        <p>
+            Total: £@order.TotalAmount
+        </p>
+
+        <a asp-action="OrderConfirmation"
+           asp-route-id="@order.Id"
+           class="btn btn-primary">
+            View Order
+        </a>
+
+    </div>
+}

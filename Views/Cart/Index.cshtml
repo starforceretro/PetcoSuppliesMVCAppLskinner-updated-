@@ -1,0 +1,95 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.Cart
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+
+    decimal total = 0;
+}
+
+<h1 class="mb-4">Shopping Cart</h1>
+
+@if (Model == null || !Model.CartItems.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.CartItems)
+            {
+                decimal subtotal =
+                item.Product.Price * item.Quantity;
+
+                total += subtotal;
+
+                <tr>
+
+                    <td>
+                        <img src="@item.Product.ImageUrl"
+                             width="80"
+                             height="80"
+                             style="object-fit:cover;" />
+                    </td>
+
+                    <td>
+                        @item.Product.Name
+                    </td>
+
+                    <td>
+                        £@item.Product.Price
+                    </td>
+
+                    <td>
+                        @item.Quantity
+                    </td>
+
+                    <td>
+                        £@subtotal
+                    </td>
+
+                    <td>
+                        <a asp-action="RemoveFromCart"
+                           asp-route-id="@item.ProductId"
+                           class="btn btn-danger btn-sm">
+                            Remove
+                        </a>
+                    </td>
+              
+                  
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <h3 class="mt-4">
+        Total: £@total
+    </h3>
+
+    <a asp-action="ClearCart"
+       class="btn btn-warning">
+        Clear Cart
+    </a>
+
+    <a asp-controller="Orders"
+       asp-action="Checkout"
+       class="btn btn-success">
+        Checkout
+    </a>
+}

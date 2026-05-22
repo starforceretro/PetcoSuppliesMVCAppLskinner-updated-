@@ -1,0 +1,47 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.PetGalleryPost
+
+@{
+    ViewData["Title"] = "Upload Pet";
+}
+
+<h1 class="mb-4">Upload Your Pet</h1>
+
+<form asp-action="Create"
+      method="post"
+      enctype="multipart/form-data">
+
+    <div class="mb-3">
+
+        <label class="form-label">Pet Name</label>
+
+        <input asp-for="PetName"
+               class="form-control" />
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Description</label>
+
+        <textarea asp-for="Description"
+                  class="form-control">
+        </textarea>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label">Pet Image</label>
+
+        <input type="file"
+               name="imageFile"
+               class="form-control" />
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Upload Pet
+    </button>
+
+</form>

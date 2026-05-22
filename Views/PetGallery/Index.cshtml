@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.PetGalleryPost>
+
+@{
+    ViewData["Title"] = "Pet Gallery";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h1>Pet Gallery</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create"
+           class="btn btn-success">
+            Upload Pet
+        </a>
+    }
+
+</div>
+
+<div class="row">
+
+    @foreach (var post in Model)
+    {
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <img src="@post.ImageUrl"
+                     class="card-img-top"
+                     style="height:300px; object-fit:cover;" />
+
+                <div class="card-body">
+
+                    <h4>@post.PetName</h4>
+
+                    <p>@post.Description</p>
+
+                    <small class="text-muted">
+                        Uploaded: @post.UploadDate.ToShortDateString()
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+

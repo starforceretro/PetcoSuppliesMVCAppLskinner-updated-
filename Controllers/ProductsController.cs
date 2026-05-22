@@ -25,6 +25,152 @@ namespace PetcoSuppliesMVCAppLskinner.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [Authorize(Roles = "Admin,Staff")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["CategoryId"] =
+                new SelectList(_context.Categories,
+                "Id",
+                "Name",
+                product.CategoryId);
+
+            return View(product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Staff")]
+        public async Task<IActionResult> Edit(int id, Product product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // GET EXISTING PRODUCT FROM DATABASE
+
+                    var existingProduct =
+                        await _context.Products.AsNoTracking()
+                        .FirstOrDefaultAsync(p => p.Id == id);
+
+                    if (existingProduct == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // KEEP OLD IMAGE BY DEFAULT
+
+                    product.ImageUrl = existingProduct.ImageUrl;
+
+                    // NEW IMAGE UPLOAD
+
+                    if (product.ImageFile != null)
+                    {
+                        string uploadsFolder = Path.Combine(
+                            _webHostEnvironment.WebRootPath,
+                            "images/products");
+
+                        Directory.CreateDirectory(uploadsFolder);
+
+                        string fileExtension =
+                            Path.GetExtension(product.ImageFile.FileName);
+
+                        string uniqueFileName =
+                            Guid.NewGuid().ToString() + fileExtension;
+
+                        string filePath =
+                            Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var fileStream =
+                               new FileStream(filePath, FileMode.Create))
+                        {
+                            await product.ImageFile.CopyToAsync(fileStream);
+                        }
+
+                        product.ImageUrl =
+                            "/images/products/" + uniqueFileName;
+                    }
+
+                    _context.Update(product);
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Products.Any(e => e.Id == product.Id))
+                    {
+                        return NotFound();
+                    }
+
+                    throw;
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["CategoryId"] =
+                new SelectList(
+                    _context.Categories,
+                    "Id",
+                    "Name",
+                    product.CategoryId);
+
+            return View(product);
+        }
+
+        [Authorize(Roles = "Admin,Staff")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Staff")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Products
         public async Task<IActionResult> Index(string searchString, int? categoryId)
         {
