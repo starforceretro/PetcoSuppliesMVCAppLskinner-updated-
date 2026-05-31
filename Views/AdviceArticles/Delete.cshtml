@@ -1,0 +1,19 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.AdviceArticle
+
+<h1>Delete Article</h1>
+
+<h3>Are you sure?</h3>
+
+<h4>@Model.Title</h4>
+
+<form asp-action="Delete">
+
+    <input type="hidden"
+           asp-for="Id" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Delete
+    </button>
+
+</form>

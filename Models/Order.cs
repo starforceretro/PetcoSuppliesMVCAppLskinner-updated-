@@ -9,7 +9,7 @@ namespace PetcoSuppliesMVCAppLskinner.Models
 
         public string UserId { get; set; } // Foreign key to the user who placed the order
 
-        public ApplicationUser User { get; set; } // Navigation property to the user who placed the order
+        public ApplicationUser? User { get; set; } // Navigation property to the user who placed the order
 
         public DateTime OrderDate { get; set; } // Date when the order was placed
 
@@ -17,6 +17,6 @@ namespace PetcoSuppliesMVCAppLskinner.Models
 
         public string Status { get; set; } // Status of the order (e.g., Pending, Shipped, Delivered, Cancelled)
 
-        public ICollection<OrderItem> OrderItems { get; set; } // Navigation property to the items in the order
+        public ICollection<OrderItem>? OrderItems { get; set; } // Navigation property to the items in the order
     }
 }

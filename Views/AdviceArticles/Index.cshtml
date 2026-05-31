@@ -1,0 +1,68 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.AdviceArticle>
+
+<h1>Pet Advice</h1>
+
+<div class="mb-3">
+
+    <a asp-action="Index" class="btn btn-outline-dark">
+        All
+    </a>
+
+    <a asp-action="Index"
+       asp-route-category="Dogs"
+       class="btn btn-outline-primary">
+        Dogs
+    </a>
+
+    <a asp-action="Index"
+       asp-route-category="Cats"
+       class="btn btn-outline-primary">
+        Cats
+    </a>
+
+    <a asp-action="Index"
+       asp-route-category="Birds"
+       class="btn btn-outline-primary">
+        Birds
+    </a>
+
+    <a asp-action="Index"
+       asp-route-category="Reptiles"
+       class="btn btn-outline-primary">
+        Reptiles
+    </a>
+
+</div>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+{
+    <a asp-action="Create"
+       class="btn btn-success mb-3">
+        Create Advice Article
+    </a>
+}
+
+@foreach (var item in Model)
+{
+    <div class="card mb-3 p-3">
+
+        <h3>@item.Title</h3>
+
+        <p>
+            <strong>Category:</strong>
+            @item.AnimalCategory
+        </p>
+
+        <p>
+            @item.Content.Substring(0,
+            Math.Min(item.Content.Length, 150))...
+    </p>
+
+    <a asp-action="Details"
+       asp-route-id="@item.Id"
+       class="btn btn-primary">
+        Read More
+    </a>
+
+</div>
+}

@@ -4,29 +4,52 @@
 
 @foreach (var order in Model)
 {
-    <div class="card mb-4 p-3">
+    <div class="card mb-4 p-3"> 
 
-        <h4>
-            Order #@order.Id
-        </h4>
+        <h4>Order #@order.Id</h4>
 
-        <p>
-            Date: @order.OrderDate
-        </p>
+        <p>Date: @order.OrderDate</p>
 
-        <p>
-            Status: @order.Status
-        </p>
+        <p>Status: @order.Status</p>
 
-        <p>
-            Total: £@order.TotalAmount
-        </p>
+        <p>Total: £@order.TotalAmount</p>
 
         <a asp-action="OrderConfirmation"
            asp-route-id="@order.Id"
-           class="btn btn-primary">
+           class="btn btn-primary mb-3">
             View Order
         </a>
 
+        <hr />
+
+        <h5>Products</h5>
+
+        @foreach (var item in order.OrderItems)
+        {
+            <div class="border p-2 mb-2">
+
+                <p>
+                    <strong>@item.Product.Name</strong>
+                </p>
+
+                <p>
+                    Quantity: @item.Quantity
+                </p>
+
+                <p>
+                    Price: £@item.Price
+                </p>
+
+                <a asp-controller="Returns"
+                   asp-action="Create"
+                   asp-route-orderId="@order.Id"
+                   asp-route-productId="@item.ProductId"
+                   class="btn btn-warning btn-sm">
+                    Request Return
+                </a>
+
+            </div>
+        }
+        <!-- This is for showing user orders -->
     </div>
 }

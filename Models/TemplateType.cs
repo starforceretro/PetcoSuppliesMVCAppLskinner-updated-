@@ -1,6 +1,6 @@
 ﻿namespace PetcoSuppliesMVCAppLskinner.Models
 {
-    public enum TemplateType
+    public enum TemplateType // again, not currently being used 
     {
         OrderCompletion = 1,
         OrderCancelled = 2,

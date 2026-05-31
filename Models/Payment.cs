@@ -2,6 +2,7 @@
 {
     public class Payment
     {
+        // this hasn't been used in my code but could potentially be used if paypal was implemented 
         public int Id { get; set; } // Primary key for the payment
 
         public int OrderId { get; set; } // Foreign key to the order this payment is associated with

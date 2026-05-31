@@ -1,0 +1,63 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.ReturnRequest>
+
+<h2>Manage Return Requests</h2>
+
+<table class="table">
+    <!-- Shows all return requests on the system -->
+
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @item.Order.User.Email
+                    <br />
+                    <small>
+                        @item.Order.User.FirstName
+                        @item.Order.User.LastName
+                    </small>
+                </td>
+
+                <td>@item.Product.Name</td>
+
+                <td>@item.Reason</td>
+
+                <td>@item.Status</td>
+
+                <td>@item.RequestDate.ToShortDateString()</td>
+
+                <td>
+
+                    <a asp-action="Approve"
+                       asp-route-id="@item.Id"
+                       class="btn btn-success btn-sm">
+                        Approve
+                    </a>
+
+                    <a asp-action="Reject"
+                       asp-route-id="@item.Id"
+                       class="btn btn-danger btn-sm">
+                        Reject
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

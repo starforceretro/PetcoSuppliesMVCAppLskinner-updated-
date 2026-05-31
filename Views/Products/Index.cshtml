@@ -6,7 +6,7 @@
 
 <h1 class="mb-4">Products</h1>
 
-@if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+@if (User.IsInRole("Admin") || User.IsInRole("Staff")) <!-- This only shows if the user is one of these roles -->
 {
     <p>
         <a asp-action="Create" class="btn btn-success">
@@ -79,7 +79,7 @@
 
                     <div class="mt-auto">
 
-                        <a asp-action="Details"
+                        <a asp-action="Details" <!-- Things without user.isinrole can be seen by everyone -->
                            asp-route-id="@item.Id"
                            class="btn btn-outline-primary btn-sm">
                             Details

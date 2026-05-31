@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.PetGalleryPost>
+
+<h1>Moderate Pet Gallery</h1>
+
+<table class="table"> 
+
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Pet</th>
+            <th>Uploaded By</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var post in Model)
+        {
+            <tr>
+
+                <td>
+                    <img src="@post.ImageUrl"
+                         width="100" />
+                </td>
+
+                <td>
+                    <strong>@post.PetName</strong>
+                    <br />
+                    @post.Description
+                </td>
+
+                <td>
+                    @post.User?.Email
+                </td>
+
+                <td>
+                    @post.UploadDate.ToShortDateString()
+                </td>
+
+                <td>
+                    <a asp-action="Delete"
+                       asp-route-id="@post.Id"
+                       class="btn btn-danger">
+                        Remove
+                    </a>
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<!-- Exclusive page for staff/admin -->

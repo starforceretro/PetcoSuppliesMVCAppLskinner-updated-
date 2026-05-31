@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PetcoSuppliesMVCAppLskinner.Models.ReturnRequest>
+
+<h2>My Return Requests</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Reason</td>
+                <td>@item.Status</td>
+                <td>@item.RequestDate.ToShortDateString()</td>
+            </tr>
+        }
+
+    </tbody>
+
+    <!-- Shows a users own individual return requests -->
+
+</table>

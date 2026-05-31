@@ -29,11 +29,16 @@
                 <td>@item.Town</td>
 
                 <td>
-                    <a asp-action="DeleteUser"
-                       asp-route-id="@item.Id"
-                       class="btn btn-danger">
-                        Delete
-                    </a>
+                    <form asp-action="DeleteUser"
+                          asp-route-id="@item.Id"
+                          method="post">
+                        @Html.AntiForgeryToken()
+
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
                 </td>
 
                 <td>

@@ -1,0 +1,36 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.ReturnRequest
+
+<h2>Request Return</h2>
+
+<form asp-action="Create" method="post">
+    <!-- creating return requests  -->
+
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="OrderId" />
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="mb-3">
+
+        <label asp-for="Reason" class="form-label"></label>
+
+        <textarea asp-for="Reason"
+                  class="form-control"></textarea>
+
+        <span asp-validation-for="Reason"
+              class="text-danger"></span>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-danger">
+        Submit Return Request
+    </button>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -5,7 +5,7 @@
 }
 
 <h1>Index</h1>
-
+<!-- This is for creating orders -->
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.User) <!-- Going to be unique for every single user  -->
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDate)
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | <!-- The options -->
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>

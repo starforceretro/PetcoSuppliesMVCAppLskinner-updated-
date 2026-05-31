@@ -17,7 +17,7 @@ namespace PetcoSupplies.Controllers
 
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AdminController(
+        public AdminController( // constructor with dependency injection
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -29,22 +29,22 @@ namespace PetcoSupplies.Controllers
             _signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index() // a page to list all users with options to view details, edit, or delete
         {
-            var users = _context.Users.ToList();
+            var users = _context.Users.ToList(); // get all users from the database
 
-            return View(users);
+            return View(users); // pass the list of users to the view
         }
 
 
-        public IActionResult CreateUser()
+        public IActionResult CreateUser() // a page to create a new user, including their details and role assignment
         {
             return View();
         }
 
         public async Task<IActionResult> Details(string id) // a page to show the details of a user, including their orders
         {
-            var user = await _context.Users
+            var user = await _context.Users // get the user from the database, including their orders
                 .Include(u => u.Orders)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
@@ -71,7 +71,7 @@ namespace PetcoSupplies.Controllers
 
             var model = new AdminUserViewModel // create a view model to pass to the view
             {
-                Id = user.Id,
+                Id = user.Id, // populate the view model with the user's current details
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -88,17 +88,17 @@ namespace PetcoSupplies.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(AdminUserViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) // if the model state is not valid, return the view with the current model to show validation errors
                 return View(model);
 
-            var user = await _userManager.FindByIdAsync(model.Id);
+            var user = await _userManager.FindByIdAsync(model.Id); // find the user in the database by their ID
 
-            if (user == null)
+            if (user == null) // if the user is not found, return a 404 Not Found response
                 return NotFound();
 
             // Update user details
 
-            user.FirstName = model.FirstName;
+            user.FirstName = model.FirstName; // update the user's first name with the value from the form
             user.LastName = model.LastName;
             user.Street = model.Street;
             user.Town = model.Town;
@@ -113,7 +113,7 @@ namespace PetcoSupplies.Controllers
             if (!string.IsNullOrEmpty(model.NewPassword))
             {
                 var token =
-                    await _userManager.GeneratePasswordResetTokenAsync(user);
+                    await _userManager.GeneratePasswordResetTokenAsync(user); // generate a password reset token for the user
 
                 var passwordResult =
                     await _userManager.ResetPasswordAsync(
@@ -132,18 +132,18 @@ namespace PetcoSupplies.Controllers
                 }
             }
 
-            // SAVE USER CHANGES
+            // Save changes to the database 
 
-            var result = await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user); // update the user in the database
 
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // if the update is successful, redirect to the index page to show the list of users
             }
 
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error.Description);
+                ModelState.AddModelError("", error.Description); // if there are errors during the update, add them to the model state to show validation errors in the view
             }
 
             return View(model);
@@ -151,13 +151,13 @@ namespace PetcoSupplies.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUser(AdminUserViewModel model)
+        public async Task<IActionResult> CreateUser(AdminUserViewModel model) // handle the form submission for creating a new user
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.Email,
+                    UserName = model.Email, // use email as username
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
@@ -168,38 +168,42 @@ namespace PetcoSupplies.Controllers
                     EmailConfirmed = true
                 };
 
-                var result = await _userManager.CreateAsync(
+                var result = await _userManager.CreateAsync( // create the user in the database with the specified password
                     user,
                     model.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                    await _userManager.AddToRoleAsync(user, model.Role); // assign the specified role to the user
 
                     return RedirectToAction(nameof(Index));
                 }
 
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("", error.Description); // if there are errors during user creation, add them to the model state to show validation errors in the view
                 }
             }
 
             return View(model);
 
         }
-        
 
-        [HttpPost, ActionName("DeleteUser")]
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUserConfirmed(string id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            if (user != null)
+            if (user == null)
             {
-                await _userManager.DeleteAsync(user);
+                return NotFound();
             }
+
+            await _userManager.DeleteAsync(user);
+
+            TempData["Success"] = "User deleted successfully.";
 
             return RedirectToAction(nameof(Index));
         }

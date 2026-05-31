@@ -1,0 +1,139 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.ViewModels.EditProfileViewModel
+
+<h2>Edit Profile</h2>
+
+<form asp-action="EditProfile" method="post">  <!-- method is post  -->
+
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+
+        <label asp-for="FirstName"></label>
+
+        <input asp-for="FirstName"
+               class="form-control" />
+
+        <span asp-validation-for="FirstName"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="LastName"></label>
+
+        <input asp-for="LastName"
+               class="form-control" />
+
+        <span asp-validation-for="LastName"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="Email"></label>
+
+        <input asp-for="Email"
+               class="form-control" />
+
+        <span asp-validation-for="Email"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="Street"></label>
+
+        <input asp-for="Street"
+               class="form-control" />
+
+        <span asp-validation-for="Street"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="Town"></label>
+
+        <input asp-for="Town"
+               class="form-control" />
+
+        <span asp-validation-for="Town"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="PostCode"></label>
+
+        <input asp-for="PostCode"
+               class="form-control" />
+
+        <span asp-validation-for="PostCode"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="TelephoneNumber"></label>
+
+        <input asp-for="TelephoneNumber"
+               class="form-control" />
+
+        <span asp-validation-for="TelephoneNumber"
+              class="text-danger"></span>
+
+    </div>
+
+    <hr />
+
+    <h4>Change Password (Optional)</h4>
+
+    <div class="mb-3">
+
+        <label asp-for="NewPassword"></label>
+
+        <input asp-for="NewPassword"
+               type="password"
+               class="form-control" />
+
+        <span asp-validation-for="NewPassword"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="ConfirmNewPassword"></label>
+
+        <input asp-for="ConfirmNewPassword"
+               type="password"
+               class="form-control" />
+
+        <span asp-validation-for="ConfirmNewPassword"
+              class="text-danger"></span>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Save Changes
+    </button>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PetcoSuppliesMVCAppLskinner.Data;
 using PetcoSuppliesMVCAppLskinner.Models;
+using PetcoSuppliesMVCAppLskinner.Services;
 
 namespace PetcoSuppliesMVCAppLskinner
 {
@@ -30,7 +31,9 @@ namespace PetcoSuppliesMVCAppLskinner
 
             builder.Services.AddAuthorization();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<EmailService>();
             builder.Services.AddRazorPages();
+            builder.Services.AddScoped<InvoiceService>();
 
             var app = builder.Build();
 
@@ -51,7 +54,7 @@ namespace PetcoSuppliesMVCAppLskinner
 
             app.UseRouting();
 
-            app.UseAuthentication(); // ADD THIS
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.MapControllerRoute(

@@ -4,6 +4,8 @@ namespace PetcoSuppliesMVCAppLskinner.Models
 {
     public class Template
     {
+        // this was originally going to bcrypt but i decided to use QuestPDF instead for invoice generation
+        // if anyone ever wanted to do it with the original intended way, i will leave this here for reference, but it is not currently being used in the application
 
         [Key]
         public int Id { get; set; }

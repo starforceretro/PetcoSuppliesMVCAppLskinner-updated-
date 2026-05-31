@@ -11,7 +11,7 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.User) <!-- Means this page is going to show something different for each user -->
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.User.Id)
@@ -37,6 +37,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> | <!-- Navigational things -->
     <a asp-action="Index">Back to List</a>
+    <a asp-action="DownloadInvoice"
+       asp-route-id="@Model?.Id"
+       class="btn btn-success">
+        Download Invoice
+    </a>
 </div>

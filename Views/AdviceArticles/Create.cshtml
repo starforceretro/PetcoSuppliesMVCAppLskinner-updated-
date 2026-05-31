@@ -1,0 +1,47 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.AdviceArticle
+
+<h1>Create Advice Article</h1>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+
+        <label asp-for="Title"></label>
+
+        <input asp-for="Title"
+               class="form-control" />
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="AnimalCategory"></label>
+
+        <select asp-for="AnimalCategory"
+                class="form-control">
+
+            <option>Dogs</option>
+            <option>Cats</option>
+            <option>Birds</option>
+            <option>Reptiles</option>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="Content"></label>
+
+        <textarea asp-for="Content"
+                  rows="10"
+                  class="form-control"></textarea>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Create Article
+    </button>
+
+</form>

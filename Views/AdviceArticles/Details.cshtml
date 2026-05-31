@@ -1,0 +1,36 @@
+﻿@model PetcoSuppliesMVCAppLskinner.Models.AdviceArticle
+
+<h1>@Model.Title</h1>
+
+<p>
+    <strong>Category:</strong>
+    @Model.AnimalCategory
+</p>
+
+<p>
+    <strong>Posted:</strong>
+    @Model.CreatedDate.ToShortDateString()
+</p>
+
+<hr />
+
+<div>
+    @Model.Content
+</div>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+{
+    <hr />
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.Id"
+       class="btn btn-warning">
+        Edit
+    </a>
+
+    <a asp-action="Delete"
+       asp-route-id="@Model.Id"
+       class="btn btn-danger">
+        Delete
+    </a>
+}

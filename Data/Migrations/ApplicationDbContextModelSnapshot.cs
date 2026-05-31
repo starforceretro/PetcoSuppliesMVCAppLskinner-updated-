@@ -517,6 +517,10 @@ namespace PetcoSuppliesMVCAppLskinner.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ReturnRequests");
                 });
 
@@ -686,6 +690,25 @@ namespace PetcoSuppliesMVCAppLskinner.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("PetcoSuppliesMVCAppLskinner.Models.ReturnRequest", b =>
+                {
+                    b.HasOne("PetcoSuppliesMVCAppLskinner.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetcoSuppliesMVCAppLskinner.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("PetcoSuppliesMVCAppLskinner.Models.WishListItem", b =>

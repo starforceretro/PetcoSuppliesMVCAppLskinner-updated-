@@ -1,22 +1,143 @@
+/*Updated styling*/
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+    background: linear-gradient(135deg, #bfe9ff, #bfe6c6);
+    padding: 80px 20px;
+    border-radius: 0 0 30px 30px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2f5d46;
+    margin-bottom: 15px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #3e5c4a;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   HERO BUTTONS
+========================= */
+
+.hero-buttons .btn {
+    margin: 5px;
+    border-radius: 12px;
+    padding: 10px 18px;
+}
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
+.feature-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .feature-card h4 {
+        color: #2f5d46;
+        margin-bottom: 10px;
+    }
+
+    .feature-card p {
+        color: #4b6b5a;
+    }
+
+:root {
+    --sky-blue: #bfe9ff;
+    --deep-blue: #4aa3df;
+    --soft-green: #bfe6c6;
+    --forest-green: #4f8a5b;
+    --cream: #f7fbf7;
+    --glass: rgba(255, 255, 255, 0.7);
+    --text: #2f3e34;
+}
+
 html {
-  font-size: 14px;
+    font-size: 15px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: linear-gradient(180deg, var(--cream), #eaf7ff);
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+
+
+.app-navbar {
+    background: linear-gradient(90deg, var(--soft-green), var(--sky-blue));
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+.brand-text {
+    font-weight: 600;
+    color: #2d5c3b !important;
+    letter-spacing: 0.3px;
+}
+
+
+.app-link {
+    color: #2f3e34 !important;
+    border-radius: 10px;
+    padding: 6px 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.app-link:hover {
+    background: rgba(255,255,255,0.5);
+    color: var(--forest-green) !important;
+}
+
+
+
+.app-content {
+    background: var(--glass);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+
+.btn:focus,
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(74, 163, 223, 0.25);
+}
+
+
+.app-footer {
+    background: linear-gradient(90deg, #eaf7ff, #e9f7ef);
+    padding: 15px 0;
+    text-align: center;
+    color: #4b5b50;
 }

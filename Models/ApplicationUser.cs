@@ -10,20 +10,20 @@
             public string FirstName { get; set; }
 
             [Required] // Data annotation to ensure that the LastName property is required
-            public string LastName { get; set; }
+            public string LastName { get; set; } // Data annotation to ensure that the LastName property is required
 
-            [Required]
-            public string Street { get; set; }
-            
-            public string TelephoneNumber { get; set; }
+        [Required]
+            public string Street { get; set; } // Data annotation to ensure that the Street property is required
 
-            [Required]
-            public string Town { get; set; }
+        public string TelephoneNumber { get; set; } // Telephone number of the user, which is not marked as required since it may be optional when editing the profile
 
-            [Required]
-            public string PostCode { get; set; }
+        [Required]
+            public string Town { get; set; } // Data annotation to ensure that the Town property is required
 
-        public ICollection<Order> Orders { get; set; }
+        [Required]
+            public string PostCode { get; set; } // Data annotation to ensure that the PostCode property is required
+
+        public ICollection<Order> Orders { get; set; } // Navigation property to represent the one-to-many relationship between ApplicationUser and Order, allowing access to the user's orders through this property
 
     }
     }

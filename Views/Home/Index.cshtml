@@ -1,8 +1,81 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section">
+
+    <div class="hero-content">
+
+        <h1 class="hero-title">
+            Welcome to Petco Supplies <!-- A Welcome Message -->
+        </h1>
+
+        <p class="hero-subtitle">
+            Everything your pets need — food, toys, care, and love — in one calm, friendly place. <!-- Additional info -->
+        </p>
+        <p class="hero-subtitle">
+           A family run business for more than 40 years based in Glasgow.
+            </p>
+
+        <div class="hero-buttons">
+
+            <a asp-controller="Products"
+               asp-action="Index"
+               class="btn btn-primary btn-lg">
+                Shop Now
+            </a>
+
+            <a asp-controller="PetGallery"
+               asp-action="Index"
+               class="btn btn-outline-success btn-lg">
+                View Pet Gallery
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FEATURE SECTION -->
+
+<div class="container mt-5">
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="feature-card">
+
+                <h4>🐾 Quality Products</h4>
+                <p>Carefully selected supplies for happy, healthy pets.</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="feature-card">
+
+                <h4>💚 Pet Community</h4>
+                <p>Share moments, birthdays, and adorable pet photos.</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="feature-card">
+
+                <h4>📦 Fast & Reliable</h4>
+                <p>Quick delivery and easy ordering for peace of mind.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

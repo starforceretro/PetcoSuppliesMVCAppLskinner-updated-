@@ -3,17 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PetcoSuppliesMVCAppLskinner</title>
+    <title>@ViewData["Title"] - Petco Supplies</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PetcoSuppliesMVCAppLskinner.styles.css" asp-append-version="true" />
 </head>
-<body>
+
+<body class="app-shell">
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+        <nav class="navbar navbar-expand-sm navbar-light app-navbar shadow-sm mb-3">
+
             <div class="container-fluid">
 
-                <a class="navbar-brand"
+                <a class="navbar-brand brand-text"
                    asp-area=""
                    asp-controller="Home"
                    asp-action="Index">
@@ -29,102 +33,108 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    <!-- LEFT SIDE NAV -->
-
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-controller="Home"
-                               asp-action="Index">
-                                Home
-                            </a>
+                            <a class="nav-link app-link" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-controller="Products"
-                               asp-action="Index">
-                                Shop
-                            </a>
+                            <a class="nav-link app-link" asp-controller="Products" asp-action="Index">Shop</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-controller="Cart"
-                               asp-action="Index">
-                                Cart
-                            </a>
-                        </li>
-
-                        <!-- WISHLIST -->
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"
-                                   asp-controller="Wishlist"
-                                   asp-action="Index">
-                                    Wishlist
-                                </a>
+                                <a class="nav-link app-link" asp-controller="Cart" asp-action="Index">Cart</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link app-link" asp-controller="Orders" asp-action="UserOrders">My Orders</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link app-link" asp-controller="Wishlist" asp-action="Index">Wishlist</a>
                             </li>
                         }
 
-                        <!-- PET GALLERY -->
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-controller="PetGallery"
-                               asp-action="Index">
-                                Pet Gallery
-                            </a>
+                            <a class="nav-link app-link" asp-controller="PetGallery" asp-action="Index">Pet Gallery</a>
                         </li>
 
-                        <!-- PET BIRTHDAYS -->
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-controller="PetGallery"
-                               asp-action="BirthdayPets">
-                                Pet Birthdays
-                            </a>
+                            <a class="nav-link app-link" asp-controller="Contact" asp-action="AboutUs">About Us</a>
                         </li>
 
-                        <!-- ADMIN -->
-                        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                        <li class="nav-item">
+                            <a class="nav-link app-link" asp-controller="AdviceArticles" asp-action="Index">Pet Advice</a>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"
-                                   asp-controller="Admin"
-                                   asp-action="Index">
-                                    Admin
+                                <a class="nav-link app-link" asp-controller="Returns" asp-action="MyReturns">My Returns</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link app-link" asp-controller="Account" asp-action="EditProfile">My Profile</a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link app-link" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                        {
+                            <li class="nav-item dropdown">
+
+                                <a class="nav-link dropdown-toggle app-link"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown">
+                                    Staff Panel
                                 </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Products" asp-action="Create">Add Product</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Orders" asp-action="Index">Manage Orders</a></li>
+                                    <li><a class="dropdown-item" asp-controller="PetGallery" asp-action="Moderate">Moderate Pets</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Returns" asp-action="Index">Return Requests</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Manage Users</a></li>
+                                </ul>
+
                             </li>
                         }
 
                     </ul>
-
-                    <!-- LOGIN -->
 
                     <partial name="_LoginPartial" />
 
                 </div>
             </div>
         </nav>
+
     </header>
-    <div class="container">
+
+    <div class="container app-content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="app-footer border-top">
         <div class="container">
-            &copy; 2026 - PetcoSuppliesMVCAppLskinner - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - Petco Supplies -
+            <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
